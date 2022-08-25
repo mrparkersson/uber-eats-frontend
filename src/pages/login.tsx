@@ -1,10 +1,15 @@
 import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import { FormError } from '../components/form-error';
+import {
+  loginMutation,
+  loginMutationVariables,
+} from '../__generated__/loginMutation';
+import uberEatsLogo from '../images/logo.svg';
 
 const LOGIN_MUTATION = gql`
-  mutation PotatoMutation($email: String!, $password: String!) {
-    login(input: { email: $email, password: $password }) {
+  mutation loginMutation($loginAccountInput: LoginAccountInput!) {
+    login(input: $loginAccountInput) {
       ok
       token
       error
@@ -25,25 +30,47 @@ const Login = () => {
     handleSubmit,
   } = useForm<ILoginForm>();
 
-  const [loginMutation] = useMutation(LOGIN_MUTATION);
+  const onCompleted = (data: loginMutation) => {
+    const {
+      login: { error, ok, token },
+    } = data;
+    if (ok) {
+      console.log(token);
+    }
+  };
+
+  const [loginMutation, { data: loginMutationResult, loading }] = useMutation<
+    loginMutation,
+    loginMutationVariables
+  >(LOGIN_MUTATION, {
+    onCompleted,
+  });
 
   const onSubmit = () => {
-    const { email, password } = getValues();
-    loginMutation({
-      variables: {
-        email,
-        password,
-      },
-    });
+    if (!loading) {
+      const { email, password } = getValues();
+      loginMutation({
+        variables: {
+          loginAccountInput: {
+            email,
+            password,
+          },
+        },
+      });
+    }
   };
 
   return (
-    <div className=" h-screen flex items-center justify-center bg-gray-800">
-      <div className=" bg-white w-full max-w-lg pt-10 pb-7 rounded-lg text-center">
-        <h3 className=" text-3xl text-gray-800">Log In</h3>
+    <div className=" h-screen flex items-center flex-col mt-10 lg:mt-28">
+      <div className=" w-full max-w-screen-sm flex flex-col items-center">
+        <img
+          src={uberEatsLogo}
+          alt="logo for uber eats"
+          className=" w-52 mb-5"
+        />
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="grid gap-3 mt-5 px-5"
+          className="grid gap-3 mt-5 px-5 w-full"
         >
           <input
             {...register('email', { required: true })}
@@ -74,6 +101,9 @@ const Login = () => {
           <button className=" py-3 px-5 bg-gray-800 text-white mt-3 text-lg rounded-lg focus:outline-none hover:opacity-90">
             Log In
           </button>
+          {loginMutationResult?.login.error && (
+            <FormError errorMessage={loginMutationResult.login.error} />
+          )}
         </form>
       </div>
     </div>
