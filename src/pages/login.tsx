@@ -6,6 +6,9 @@ import {
   loginMutationVariables,
 } from '../__generated__/loginMutation';
 import uberEatsLogo from '../images/logo.svg';
+import Button from '../components/button';
+import { Link } from 'react-router-dom';
+import Helmet from 'react-helmet';
 
 const LOGIN_MUTATION = gql`
   mutation loginMutation($loginAccountInput: LoginAccountInput!) {
@@ -26,9 +29,11 @@ const Login = () => {
   const {
     register,
     getValues,
-    formState: { errors },
+    formState: { errors, isValid },
     handleSubmit,
-  } = useForm<ILoginForm>();
+  } = useForm<ILoginForm>({
+    mode: 'onChange',
+  });
 
   const onCompleted = (data: loginMutation) => {
     const {
@@ -36,6 +41,7 @@ const Login = () => {
     } = data;
     if (ok) {
       console.log(token);
+      console.log(error);
     }
   };
 
@@ -62,15 +68,21 @@ const Login = () => {
 
   return (
     <div className=" h-screen flex items-center flex-col mt-10 lg:mt-28">
-      <div className=" w-full max-w-screen-sm flex flex-col items-center">
+      <Helmet>
+        <title>Login | Uber Clone</title>
+      </Helmet>
+      <div className=" w-full max-w-screen-sm flex flex-col px-5 items-center">
         <img
           src={uberEatsLogo}
           alt="logo for uber eats"
-          className=" w-52 mb-5"
+          className=" w-52 mb-10"
         />
+        <h4 className="w-full text-left text-2xl mb-5 font-medium">
+          Welcome back
+        </h4>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="grid gap-3 mt-5 px-5 w-full"
+          className="grid gap-3 mt-5 w-full"
         >
           <input
             {...register('email', { required: true })}
@@ -85,26 +97,28 @@ const Login = () => {
           )}
 
           <input
-            {...register('password', { required: true })}
+            {...register('password', { required: true, minLength: 8 })}
             type="password"
             name="password"
             required
             placeholder="Password"
             className=" bg-gray-100 shadow-inner focus:outline-none focus:ring-2 focus:ring-green-600 py-3 px-5 rounded-lg"
           />
-          {errors.password?.message && (
-            <FormError errorMessage={errors.password?.message} />
-          )}
           {errors.password?.type === 'minLength' && (
-            <FormError errorMessage="Password must be more than 10 characters" />
+            <FormError errorMessage="Password is required" />
           )}
-          <button className=" py-3 px-5 bg-gray-800 text-white mt-3 text-lg rounded-lg focus:outline-none hover:opacity-90">
-            Log In
-          </button>
+          <Button canClick={isValid} loading={loading} actionText="Log In" />
+
           {loginMutationResult?.login.error && (
             <FormError errorMessage={loginMutationResult.login.error} />
           )}
         </form>
+        <div className=" mt-4">
+          New User? {}
+          <Link to="/sign-up" className=" text-green-500 hover:underline">
+            Create account
+          </Link>
+        </div>
       </div>
     </div>
   );
