@@ -9,6 +9,7 @@ import uberEatsLogo from '../images/logo.svg';
 import Button from '../components/button';
 import { Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
+import { isLoggedInVar } from '..';
 
 const LOGIN_MUTATION = gql`
   mutation loginMutation($loginAccountInput: LoginAccountInput!) {
@@ -41,7 +42,7 @@ const Login = () => {
     } = data;
     if (ok) {
       console.log(token);
-      console.log(error);
+      isLoggedInVar(true);
     }
   };
 
@@ -85,15 +86,19 @@ const Login = () => {
           className="grid gap-3 mt-5 w-full"
         >
           <input
-            {...register('email', { required: true })}
+            {...register('email', {
+              required: true,
+              pattern:
+                /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            })}
             type="email"
             name="email"
             required
             placeholder="Email"
             className=" bg-gray-100 shadow-inner focus:outline-none focus:ring-2 focus:ring-green-600 py-3 px-5 rounded-lg"
           />
-          {errors.email?.message && (
-            <FormError errorMessage={errors.email?.message} />
+          {errors.email?.type === 'pattern' && (
+            <FormError errorMessage={'Please enter a valid email'} />
           )}
 
           <input

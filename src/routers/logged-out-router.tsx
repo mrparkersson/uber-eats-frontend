@@ -7,7 +7,7 @@ const LoggedOut = () => {
     <Router>
       <Routes>
         <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );
