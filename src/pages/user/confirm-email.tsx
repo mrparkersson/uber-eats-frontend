@@ -6,6 +6,7 @@ import {
   verifyEmail,
   verifyEmailVariables,
 } from '../../__generated__/verifyEmail';
+import { Helmet } from 'react-helmet-async';
 
 interface ConfirmEmailProps {
   thewholedata: meQuery;
@@ -61,6 +62,9 @@ const ConfirmEmail: React.FC<ConfirmEmailProps> = ({ thewholedata }) => {
   });
   return (
     <div className=" mt-5 flex flex-col items-center ">
+      <Helmet>
+        <title>Verify Email | Uber Clone</title>
+      </Helmet>
       <h2 className=" text-lg  font-medium">Confirming email...</h2>
       <h4 className=" text-gray-700 text-sm">
         Please wait, don't close this page...

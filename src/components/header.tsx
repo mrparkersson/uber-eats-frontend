@@ -16,11 +16,14 @@ const Header: React.FC<HeaderComponentProps> = ({ userEmail, verified }) => {
       )}
       <header className=" py-4">
         <div className=" w-full p-5 xl:px-0 max-w-screen-xl mx-auto flex justify-between ">
-          <img
-            src={uberEatsLogo}
-            alt="logo for uber eats"
-            className=" w-24 mb-10"
-          />
+          <Link to="/">
+            <img
+              src={uberEatsLogo}
+              alt="logo for uber eats"
+              className=" w-24 mb-10"
+            />
+          </Link>
+
           <span className="text-xs">
             <Link to="/edit-profile">{userEmail}</Link>
           </span>
