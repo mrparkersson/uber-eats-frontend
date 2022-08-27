@@ -1,5 +1,5 @@
 import { useReactiveVar } from '@apollo/client';
-import React from 'react';
+
 import { isLoggedInVar } from '.';
 import LoggedIn from './routers/logged-in-router';
 import LoggedOut from './routers/logged-out-router';

@@ -17,16 +17,20 @@
     "graphql": "^16.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-helmet": "^6.1.0",
+    "react-helmet-async": "^1.3.0",
     "react-hook-form": "^7.34.2",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "typescript": "^4.7.4",
     "web-vitals": "^2.1.4"
   },
+  "resolutions": {
+    "@types/react": "^17.0.38"
+  },
   "scripts": {
     "start": "react-scripts start",
     "apollo:codegen": "apollo client:codegen src/__generated__ --target=typescript --outputFlat",
+    "preinstall": "npm install --package-lock-only --ignore-scripts && npx npm-force-resolutions",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

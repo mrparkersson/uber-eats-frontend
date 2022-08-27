@@ -8,7 +8,7 @@ import {
 import uberEatsLogo from '../images/logo.svg';
 import Button from '../components/button';
 import { Link } from 'react-router-dom';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { UserRole } from '../__generated__/globalTypes';
 import { useNavigate } from 'react-router-dom';
 
@@ -32,7 +32,6 @@ const SignUp = () => {
     register,
     getValues,
     formState: { errors, isValid },
-    watch,
     handleSubmit,
   } = useForm<ICreateAccountForm>({
     mode: 'onChange',
@@ -50,7 +49,8 @@ const SignUp = () => {
     } = data;
     if (ok) {
       //redirect the usre to login page
-      navigate('/login');
+      alert('Account created successfully, login now');
+      navigate('/');
     }
   };
 
@@ -78,8 +78,6 @@ const SignUp = () => {
       });
     }
   };
-
-  console.log(watch());
 
   return (
     <div className=" h-screen flex items-center flex-col mt-10 lg:mt-28">
@@ -152,7 +150,7 @@ const SignUp = () => {
         </form>
         <div className=" mt-4">
           Already have an account? {}
-          <Link to="/login" className=" text-green-500 hover:underline">
+          <Link to="/" className=" text-green-500 hover:underline">
             Log in
           </Link>
         </div>

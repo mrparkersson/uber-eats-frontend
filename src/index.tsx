@@ -3,17 +3,37 @@ import {
   ApolloProvider,
   InMemoryCache,
   makeVar,
+  createHttpLink,
 } from '@apollo/client';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { HelmetProvider } from 'react-helmet-async';
 import './index.css';
-export const isLoggedInVar = makeVar(false);
+import { LOCALSTORAGE_TOKEN } from './constants';
+import { setContext } from '@apollo/client/link/context';
 
-const client = new ApolloClient({
+const token = localStorage.getItem(LOCALSTORAGE_TOKEN);
+export const isLoggedInVar = makeVar(Boolean(token)); //false because token is not set yet and not null because of Boolean
+export const authToken = makeVar(token); //null because token is not available
+
+const httpLink = createHttpLink({
   uri:
     process.env.REACT_APP_GRAPHQL_ENDPOINT || 'http://localhost:4000/graphql',
+});
+
+const authLink = setContext((_, { headers }) => {
+  return {
+    headers: {
+      ...headers,
+      'x-jwt': authToken() || '',
+    },
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache({
     typePolicies: {
       Query: {
@@ -21,6 +41,11 @@ const client = new ApolloClient({
           isLoggedIn: {
             read() {
               return isLoggedInVar();
+            },
+          },
+          token: {
+            read() {
+              return authToken();
             },
           },
         },
@@ -35,7 +60,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <ApolloProvider client={client}>
     <React.StrictMode>
-      <App />
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
     </React.StrictMode>
   </ApolloProvider>
 );
