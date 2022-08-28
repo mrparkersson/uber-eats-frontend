@@ -27,7 +27,6 @@ const RESTAURANTS_QUERY = gql`
         id
         name
         isPromoted
-
         address
         coverImage
       }
@@ -58,18 +57,32 @@ const Restaurants = () => {
       </form>
       {!loading && (
         <div className="max-w-screen-xl mx-auto mt-8">
+          {/* categories container */}
           <div className=" flex  justify-around max-w-xs mx-auto">
             {data?.getAllCategories.categories?.map((category) => (
-              <div className=" flex flex-col items-center gap-2 cursor-pointer">
+              <div className=" flex flex-col items-center gap-2 group  cursor-pointer">
                 <div
                   key={category.name}
-                  className=" w-14 h-14 bg-cover rounded-full"
+                  className=" w-14 h-14 bg-cover group-hover:bg-gray-100 rounded-full"
                   style={{ backgroundImage: `url(${category.coverImage})` }}
                 ></div>
                 <span className=" text-sm font-medium">{category.name}</span>
               </div>
             ))}
           </div>
+          {/* Restaurants Container  */}
+          <div className=" grid grid-cols-3 gap-7 mt-8">
+            {data?.getAllRestaurants.restaurants?.map((restaurant, index) => (
+              <div key={index}>
+                <div
+                  style={{ backgroundImage: `url(${restaurant.coverImage})` }}
+                  className=" py-32 bg-cover"
+                ></div>
+                <h3>{restaurant.name}</h3>
+              </div>
+            ))}
+          </div>
+          {/* Restaurants Container */}
         </div>
       )}
     </div>

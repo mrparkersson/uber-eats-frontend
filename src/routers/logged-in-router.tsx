@@ -8,12 +8,6 @@ import ConfirmEmail from '../pages/user/confirm-email';
 import EditProfile from '../pages/user/edit-profile';
 import { meQuery } from '../__generated__/meQuery';
 
-// const ClientRouter = [
-//   <Routes>
-//     <Route path="/" element={<Restaurants />} />
-//   </Routes>,
-// ];
-
 const ME_QUERY = gql`
   query meQuery {
     me {
