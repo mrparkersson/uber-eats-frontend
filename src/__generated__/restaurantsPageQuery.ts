@@ -25,17 +25,11 @@ export interface restaurantsPageQuery_getAllCategories {
   categories: restaurantsPageQuery_getAllCategories_categories[] | null;
 }
 
-export interface restaurantsPageQuery_getAllRestaurants_restaurants_category {
-  __typename: "Category";
-  name: string;
-}
-
 export interface restaurantsPageQuery_getAllRestaurants_restaurants {
   __typename: "Restaurant";
   id: number;
   name: string;
   isPromoted: boolean;
-  category: restaurantsPageQuery_getAllRestaurants_restaurants_category;
   address: string;
   coverImage: string;
 }

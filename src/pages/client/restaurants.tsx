@@ -27,9 +27,7 @@ const RESTAURANTS_QUERY = gql`
         id
         name
         isPromoted
-        category {
-          name
-        }
+
         address
         coverImage
       }
@@ -48,8 +46,34 @@ const Restaurants = () => {
       },
     },
   });
-  console.log(data);
-  return <div>Restaurants</div>;
+
+  return (
+    <div>
+      <form className=" bg-gray-800 w-full py-40 flex items-center justify-center">
+        <input
+          className="bg-gray-100 shadow-inner focus:outline-none focus:ring-2 focus:ring-green-600 py-3 px-5  rounded-md w-3/12 "
+          type="search"
+          placeholder="Search restaurants..."
+        />
+      </form>
+      {!loading && (
+        <div className="max-w-screen-xl mx-auto mt-8">
+          <div className=" flex  justify-around max-w-xs mx-auto">
+            {data?.getAllCategories.categories?.map((category) => (
+              <div className=" flex flex-col items-center gap-2 cursor-pointer">
+                <div
+                  key={category.name}
+                  className=" w-14 h-14 bg-cover rounded-full"
+                  style={{ backgroundImage: `url(${category.coverImage})` }}
+                ></div>
+                <span className=" text-sm font-medium">{category.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default Restaurants;
