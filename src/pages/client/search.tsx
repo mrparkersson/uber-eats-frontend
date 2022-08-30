@@ -31,7 +31,7 @@ const Search = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [queryReadyToStart, { loading, data, called }] = useLazyQuery<
+  const [queryReadyToStart, { loading, data }] = useLazyQuery<
     searchRestaurantByName,
     searchRestaurantByNameVariables
   >(SEARCH_RESTAURANT);
@@ -51,7 +51,10 @@ const Search = () => {
     });
   }, []);
 
-  console.log(loading, data, called);
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
+
   return (
     <div>
       {data?.searchRestaurantByName.restaurants?.map((restaurant) => {

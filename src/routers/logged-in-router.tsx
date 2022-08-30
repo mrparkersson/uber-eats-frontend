@@ -2,6 +2,7 @@ import { gql, useQuery } from '@apollo/client';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from '../components/header';
+import RestaurantContainer from '../pages/client/restaurant';
 import NotFound from '../pages/404';
 import CategoryContainer from '../pages/client/category';
 import Restaurants from '../pages/client/restaurants';
@@ -48,6 +49,7 @@ const LoggedIn = () => {
             />
             <Route path="/search" element={<Search />} />
             <Route path="/category/:slug" element={<CategoryContainer />} />
+            <Route path="/restaurant/:id" element={<RestaurantContainer />} />
           </>
         )}
         <Route path="*" element={<NotFound />} />
