@@ -3,7 +3,9 @@ import { gql, useQuery } from '@apollo/client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from '../components/header';
 import NotFound from '../pages/404';
+import CategoryContainer from '../pages/client/category';
 import Restaurants from '../pages/client/restaurants';
+import Search from '../pages/client/search';
 import ConfirmEmail from '../pages/user/confirm-email';
 import EditProfile from '../pages/user/edit-profile';
 import { meQuery } from '../__generated__/meQuery';
@@ -44,6 +46,8 @@ const LoggedIn = () => {
               path="/edit-profile"
               element={<EditProfile currentuser={data} />}
             />
+            <Route path="/search" element={<Search />} />
+            <Route path="/category/:slug" element={<CategoryContainer />} />
           </>
         )}
         <Route path="*" element={<NotFound />} />

@@ -15,7 +15,7 @@ const Header: React.FC<HeaderComponentProps> = ({ userEmail, verified }) => {
         </div>
       )}
       <header>
-        <div className=" w-full p-5 xl:px-0 max-w-screen-xl mx-auto flex justify-between">
+        <div className=" w-full pt-5 xl:px-0 max-w-screen-xl mx-auto flex justify-between">
           <Link to="/">
             <img
               src={uberEatsLogo}

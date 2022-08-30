@@ -32,10 +32,10 @@ export interface restaurantsPageQuery_getAllRestaurants_restaurants_category {
 
 export interface restaurantsPageQuery_getAllRestaurants_restaurants {
   __typename: "Restaurant";
+  category: restaurantsPageQuery_getAllRestaurants_restaurants_category | null;
   id: number;
   name: string;
   isPromoted: boolean;
-  category: restaurantsPageQuery_getAllRestaurants_restaurants_category;
   address: string;
   coverImage: string;
 }
