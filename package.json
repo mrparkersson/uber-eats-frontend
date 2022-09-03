@@ -33,6 +33,7 @@
     "preinstall": "npm install --package-lock-only --ignore-scripts && npx npm-force-resolutions",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:cov": "npm test -- --coverage --watchAll=false",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -59,5 +60,12 @@
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-preset-env": "^7.8.0",
     "tailwindcss": "^3.1.8"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "./src/components/**/*.tsx",
+      "./src/pages/**/*.tsx",
+      "./src/routers/**/*.tsx"
+    ]
   }
 }
