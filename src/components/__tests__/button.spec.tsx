@@ -4,6 +4,20 @@ import Button from '../button';
 
 describe('<Buton/>', () => {
   it('should render ok with props', () => {
-    render(<Button canClick={true} loading={false} actionText={'testing'} />);
+    const { getByText } = render(
+      <Button canClick={true} loading={false} actionText={'testing'} />
+    );
+    // eslint-disable-next-line testing-library/prefer-screen-queries
+    getByText('testing');
+  });
+
+  it('should display loading', () => {
+    const { getByText, container } = render(
+      <Button canClick={false} loading={true} actionText={'testing'} />
+    );
+    // eslint-disable-next-line testing-library/prefer-screen-queries
+    getByText('Loading...');
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(container.firstChild).toHaveClass('pointer-events-none');
   });
 });
