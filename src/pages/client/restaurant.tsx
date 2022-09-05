@@ -1,14 +1,10 @@
 import { gql, useQuery } from '@apollo/client';
-import { useEffect } from 'react';
+
 import { useParams } from 'react-router-dom';
 import {
   getRestaurantById,
   getRestaurantByIdVariables,
 } from '../../__generated__/getRestaurantById';
-
-interface RestaurantId {
-  id: number;
-}
 
 const GET_RESTAURANT_BY_NAME = gql`
   query getRestaurantById($input: RestaurantInput!) {
@@ -37,8 +33,6 @@ const RestaurantContainer = () => {
       },
     }
   );
-
-  console.log(data);
 
   return (
     <div className=" flex flex-col justify-center items-center">
