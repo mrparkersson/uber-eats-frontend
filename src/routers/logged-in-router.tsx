@@ -11,7 +11,7 @@ import ConfirmEmail from '../pages/user/confirm-email';
 import EditProfile from '../pages/user/edit-profile';
 import { meQuery } from '../__generated__/meQuery';
 
-const ME_QUERY = gql`
+export const ME_QUERY = gql`
   query meQuery {
     me {
       id

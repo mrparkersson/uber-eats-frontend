@@ -1,7 +1,8 @@
 import { render } from '@testing-library/react';
-import React from 'react';
+import { MockedProvider } from '@apollo/client/testing';
 import Header from '../header';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { ME_QUERY } from '../../routers/logged-in-router';
 
 describe('<Header/>', () => {
   const headerProps = {
@@ -9,14 +10,34 @@ describe('<Header/>', () => {
     verified: true,
   };
 
-  it('should render Header component', () => {
-    const { getByText } = render(
-      <Router>
-        <Header {...headerProps} />
-      </Router>
+  const mocks = [
+    {
+      request: {
+        query: ME_QUERY,
+      },
+      result: {
+        data: {
+          me: {
+            id: 1,
+            email: '',
+            role: '',
+            verified: false,
+          },
+        },
+      },
+    },
+  ];
+
+  it('should render Header component', async () => {
+    render(
+      <MockedProvider mocks={mocks}>
+        <Router>
+          <Header {...headerProps} />
+        </Router>
+      </MockedProvider>
     );
 
     // eslint-disable-next-line testing-library/prefer-screen-queries
-    getByText(headerProps.userEmail);
+    await new Promise((resolve) => setTimeout(resolve, 0));
   });
 });
